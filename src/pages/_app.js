@@ -1,5 +1,20 @@
 import "@/styles/globals.css";
+// import store from "../store/index";
+import authReducer from "../auth/authSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+const store = configureStore({
+  reducer: {
+    auth: authReducer,
+  },
+});
+
+function App({ Component, pageProps }) {
+  return (
+    <Provider store={store}>
+      <Component {...pageProps} />
+    </Provider>
+  );
 }
+export default App;

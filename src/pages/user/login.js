@@ -1,7 +1,22 @@
 import React from "react";
 import Head from "next/head";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, logoutUser } from "./authSlice";
 
 export default function login() {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const { user, isLoading, error } = useSelector((state) => state.auth);
+
+  const handleLogin = () => {
+    dispatch(loginUser({ email, password }));
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
   return (
     <div>
       <Head>
@@ -36,6 +51,8 @@ export default function login() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
                     required=""
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
@@ -49,9 +66,11 @@ export default function login() {
                     type="password"
                     name="password"
                     id="password"
-                    placeholder="••••••••"
+                    placeholder=""
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required=""
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 
@@ -84,6 +103,7 @@ export default function login() {
                 </div>
 
                 <button
+                  onClick={handleLogin}
                   type="submit"
                   className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
@@ -97,6 +117,7 @@ export default function login() {
                     Don’t have an account yet? Register
                   </p>
                 </a>
+                <button onClick={handleLogout}>Logout</button>
               </form>
             </div>
           </div>
