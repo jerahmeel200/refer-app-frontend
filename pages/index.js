@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import myHTML from "../html/index.html";
+import myHTML from "@/pagesLogic/landingPage/html/index.html";
 
 function index() {
   return (
