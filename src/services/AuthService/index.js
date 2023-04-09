@@ -8,6 +8,10 @@ class AuthService {
   register(requestBody) {
     return axios.post("/register", requestBody);
   }
+
+  getUser(requestBody) {
+    return axios.get("/user", requestBody);
+  }
 }
 
 export default new AuthService();
