@@ -82,7 +82,7 @@ export default function DasboardWrapper({ children }) {
           border: "1px solid whitesmoke",
           background: "whitesmoke",
           p: 1,
-          minHeight: "100vh",
+          minHeight: "auto",
         }}
       >
         <CssBaseline />

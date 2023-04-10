@@ -12,6 +12,15 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AuthService from "@/services/AuthService";
+import { showSuccessToast, showErrorToast } from "@/utils/toaster";
+import { Register } from "@/reduxStore/slices/auth";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import register from "pages/user/register";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { registerUser } from "@/reduxStore/slices/auth";
 
 function Copyright(props) {
   return (
@@ -34,13 +43,48 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const dispatch = useDispatch();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const authSlice = useSelector((state) => state.auth);
+  const router = useRouter();
+  useEffect(() => {
+    if (authSlice?.token) router.push("/user/dashboard");
+  }, [authSlice?.token]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    // setloading(true);
+    const data = {
+      username,
+      email,
+      password,
+    };
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+
+    try {
+      const response = await AuthService.register(data);
+      // dispatch to input to redux store
+      dispatch(registerUser(response.data));
+      localStorage.setItem("token", response.data.token);
+      router.push("/user/dashboard");
+
+      // SHOW SUCCESS MESSGAE
+      showSuccessToast(response?.data?.msg || "Success");
+    } catch (error) {
+      // show error
+      showErrorToast(error?.response?.data?.error || "An error occured!");
+    } finally {
+      // setloading(false);
+    }
   };
 
   return (
@@ -62,31 +106,21 @@ export default function SignUp() {
             Sign up
           </Typography>
           <Box
+            onSubmit={handleSubmit}
             component="form"
             noValidate
-            onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="username"
+                  label="username"
+                  name="username"
+                  autoComplete="username"
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -97,6 +131,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -108,6 +143,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
