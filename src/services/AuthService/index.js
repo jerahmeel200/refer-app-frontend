@@ -12,6 +12,9 @@ class AuthService {
   getUser(requestBody) {
     return axios.get("/user", requestBody);
   }
+  update(requestBody) {
+    return axios.put("/updateuser", requestBody);
+  }
 }
 
 export default new AuthService();

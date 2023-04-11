@@ -34,6 +34,17 @@ const authSlice = createSlice({
       };
       return state;
     },
+    // updateUser: (state, action) => {
+    //   axios.defaults.headers.common[
+    //     "Authorization"
+    //   ] = `Bearer ${action.payload.token}`;
+    //   return {
+    //     ...state,
+    //     token: action.payload.token,
+    //     user: action.payload.user,
+    //   };
+    // },
+
     logoutUser: (state, action) => {
       state = {
         ...initialState,
