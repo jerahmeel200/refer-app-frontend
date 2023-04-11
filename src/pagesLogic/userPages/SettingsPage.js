@@ -4,9 +4,12 @@ import Head from "next/head";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { showSuccessToast, showErrorToast } from "@/utils/toaster";
+
 // import AuthService from "@/services/AuthService";
 
 const SettingsPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -37,6 +40,7 @@ const SettingsPage = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     // alert("working");
     const url = "http://localhost:8080/api/updateuser";
     const reqBody = {
@@ -47,19 +51,27 @@ const SettingsPage = () => {
       // email:,
     };
     console.log("body", reqBody);
-
+    // setIsButtonDisabled(false);
     try {
       const response = await axios.put(`${url}`, reqBody, {
         headers: {
           Authorization: "Bearer " + token,
         },
       });
+      showSuccessToast("Updated Successfull" || response?.data?.msg);
       // console.log(token);
       // console.log(response.data, "data");
     } catch (error) {
+      showErrorToast(
+        error?.response?.data?.error || "error unable to update !"
+      );
+
       console.log(error, " error not working");
     } finally {
+      // setIsLoading(false);
       fetchData();
+      setIsLoading(false);
+      // setIsButtonDisabled(false);
     }
   };
 
@@ -210,10 +222,31 @@ const SettingsPage = () => {
 
                   <button
                     type="submit"
-                    // onClick={handleRegister}
+                    disabled={isLoading}
                     className="w-full text-white bg-green-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                   >
-                    update Changes
+                    {isLoading ? (
+                      <svg
+                        className="animate-spin h-5 w-5 mr-3"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 016 12H2c0 3.042 1.135 5.824 3 7.938l1-1.647zm10-5.291a7.962 7.962 0 01-2 5.291l1 1.647A7.962 7.962 0 0118 12h-4zm-2-5.291v-3.28A8.015 8.015 0 0112 4v3.291a4.001 4.001 0 104 0z"
+                        />
+                      </svg>
+                    ) : (
+                      "Update"
+                    )}
                   </button>
                   {/* <a
                     href="/user/login"
