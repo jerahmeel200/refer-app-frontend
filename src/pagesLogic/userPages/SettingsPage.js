@@ -15,6 +15,9 @@ const SettingsPage = () => {
     lastName: "",
     mobile: "",
     address: "",
+    accountName: "",
+    bankName: "",
+    accountNumber: "",
   });
 
   const authSlice = useSelector((state) => state.auth);
@@ -48,6 +51,12 @@ const SettingsPage = () => {
       lastName: userData?.lastName,
       mobile: userData?.mobile,
       address: userData.address,
+      bankDetails: {
+        accountName: userData?.accountName,
+        bankName: userData?.bankName,
+        accountNumber: userData?.accountNumber,
+      },
+
       // email:,
     };
     console.log("body", reqBody);
@@ -214,6 +223,78 @@ const SettingsPage = () => {
                       value={userData?.mobile}
                       onChange={(e) =>
                         setUserData({ ...userData, mobile: e.target.value })
+                      }
+                      required=""
+                      // value={username}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="mobile"
+                      className="block mb-2 text-sm font-medium text-black-900  "
+                    >
+                      Account number
+                    </label>
+
+                    <input
+                      type="text"
+                      name="accountNumber"
+                      id="accountNumber"
+                      className="bg-gray-50 border border-gray-500 text-black-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      placeholder=""
+                      value={userData?.accountNumber}
+                      onChange={(e) =>
+                        setUserData({
+                          ...userData,
+                          accountNumber: e.target.value,
+                        })
+                      }
+                      required=""
+                      // value={username}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="mobile"
+                      className="block mb-2 text-sm font-medium text-black-900  "
+                    >
+                      Account Name
+                    </label>
+
+                    <input
+                      type="text"
+                      name="accountName"
+                      id="accountName"
+                      className="bg-gray-50 border border-gray-500 text-black-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      placeholder=""
+                      value={userData?.accountName}
+                      onChange={(e) =>
+                        setUserData({
+                          ...userData,
+                          accountName: e.target.value,
+                        })
+                      }
+                      required=""
+                      // value={username}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="mobile"
+                      className="block mb-2 text-sm font-medium text-black-900  "
+                    >
+                      Bank Name
+                    </label>
+
+                    <input
+                      type="text"
+                      name="bankName"
+                      id="bankName"
+                      className="bg-gray-50 border border-gray-500 text-black-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      placeholder=""
+                      value={userData?.bankName}
+                      onChange={(e) =>
+                        setUserData({ ...userData, bankName: e.target.value })
                       }
                       required=""
                       // value={username}
