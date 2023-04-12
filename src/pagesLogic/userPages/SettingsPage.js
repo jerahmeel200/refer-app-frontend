@@ -15,9 +15,7 @@ const SettingsPage = () => {
     lastName: "",
     mobile: "",
     address: "",
-    accountName: "",
-    bankName: "",
-    accountNumber: "",
+    bankDetails: { accountName: "", bankName: "", accountNumber: "" },
   });
 
   const authSlice = useSelector((state) => state.auth);
@@ -50,15 +48,12 @@ const SettingsPage = () => {
       firstName: userData?.firstName,
       lastName: userData?.lastName,
       mobile: userData?.mobile,
-      address: userData.address,
-      bankDetails: {
-        accountName: userData?.accountName,
-        bankName: userData?.bankName,
-        accountNumber: userData?.accountNumber,
-      },
-
-      // email:,
+      address: userData?.address,
+      bankDetails: userData?.bankDetails,
     };
+
+    // email:,
+
     console.log("body", reqBody);
     // setIsButtonDisabled(false);
     try {
@@ -242,11 +237,14 @@ const SettingsPage = () => {
                       id="accountNumber"
                       className="bg-gray-50 border border-gray-500 text-black-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       placeholder=""
-                      value={userData?.accountNumber}
+                      value={userData?.bankDetails.accountNumber}
                       onChange={(e) =>
                         setUserData({
                           ...userData,
-                          accountNumber: e.target.value,
+                          bankDetails: {
+                            ...userData.bankDetails,
+                            accountNumber: e.target.value,
+                          },
                         })
                       }
                       required=""
@@ -267,11 +265,14 @@ const SettingsPage = () => {
                       id="accountName"
                       className="bg-gray-50 border border-gray-500 text-black-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       placeholder=""
-                      value={userData?.accountName}
+                      value={userData?.bankDetails?.accountName}
                       onChange={(e) =>
                         setUserData({
                           ...userData,
-                          accountName: e.target.value,
+                          bankDetails: {
+                            ...userData.bankDetails,
+                            accountName: e.target.value,
+                          },
                         })
                       }
                       required=""
@@ -292,9 +293,15 @@ const SettingsPage = () => {
                       id="bankName"
                       className="bg-gray-50 border border-gray-500 text-black-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       placeholder=""
-                      value={userData?.bankName}
+                      value={userData?.bankDetails?.bankName}
                       onChange={(e) =>
-                        setUserData({ ...userData, bankName: e.target.value })
+                        setUserData({
+                          ...userData,
+                          bankDetails: {
+                            ...userData.bankDetails,
+                            bankName: e.target.value,
+                          },
+                        })
                       }
                       required=""
                       // value={username}
