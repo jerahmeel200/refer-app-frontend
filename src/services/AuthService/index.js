@@ -2,18 +2,18 @@ import axios from "axios";
 
 class AuthService {
   login(requestBody) {
-    return axios.post("/login", requestBody);
+    return axios.post("/auth/login", requestBody);
   }
 
   register(requestBody) {
-    return axios.post("/register", requestBody);
+    return axios.post("/auth/register", requestBody);
   }
 
   getUser(requestBody) {
-    return axios.get("/user", requestBody);
+    return axios.get("/auth/user", requestBody);
   }
   update(requestBody) {
-    return axios.put("/updateuser", requestBody);
+    return axios.put("/auth/updateuser", requestBody);
   }
 }
 

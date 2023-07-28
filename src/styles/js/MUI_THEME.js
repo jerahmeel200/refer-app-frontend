@@ -17,28 +17,28 @@ const theme = createTheme({
     },
 
     gray20: {
-      main: "#DDDFE4"
+      main: "#DDDFE4",
     },
 
     success: {
-      main: "#0BCB58"
+      main: "#0BCB58",
     },
 
     white: {
-      main: "#fff"
+      main: "#fff",
     },
 
     F6F8FB: {
-      main: "#F6F8FB"
+      main: "#F6F8FB",
     },
 
     gray10: {
-      main: "F4F4F6"
-    }
+      main: "F4F4F6",
+    },
   },
   typography: {
-    fontSize: 20,
-    fontFamily: ["Cera Pro Regular", "Open Sans"].join(","),
+    fontSize: 12,
+    fontFamily: ["Mulish", "Open Sans"].join(","),
   },
 });
 

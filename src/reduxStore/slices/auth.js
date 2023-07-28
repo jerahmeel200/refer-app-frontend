@@ -23,28 +23,6 @@ const authSlice = createSlice({
       return state;
     },
 
-    registerUser: (state, action) => {
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${action.payload.token}`;
-      state = {
-        ...state,
-        token: action.payload.token,
-        user: action.payload.user,
-      };
-      return state;
-    },
-    // updateUser: (state, action) => {
-    //   axios.defaults.headers.common[
-    //     "Authorization"
-    //   ] = `Bearer ${action.payload.token}`;
-    //   return {
-    //     ...state,
-    //     token: action.payload.token,
-    //     user: action.payload.user,
-    //   };
-    // },
-
     logoutUser: (state, action) => {
       state = {
         ...initialState,
@@ -57,5 +35,5 @@ const authSlice = createSlice({
 
 const { actions, reducer } = authSlice;
 
-export const { loginUser, logoutUser, registerUser } = actions;
+export const { loginUser, logoutUser } = actions;
 export default reducer;
